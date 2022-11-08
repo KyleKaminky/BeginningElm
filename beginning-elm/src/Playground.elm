@@ -1,13 +1,19 @@
 module Playground exposing 
-    ( doubleScores
+    ( add
+    , doubleScores
+    , guardiansWithShortNames
     , highestScores
     , main
     , scoresLessThan320
+    , escapeEarth
+    , descending
+    , validateEmail
     )
 
 import Html
 import Regex
 
+escapeEarth : Float -> Float -> String -> String
 escapeEarth myVelocity mySpeed fuelStatus =
     let 
         escapeVelocityInKmPerSec = 
@@ -32,12 +38,15 @@ escapeEarth myVelocity mySpeed fuelStatus =
     else 
         whereToLand
 
+computeSpeed : Float -> Float -> Float
 computeSpeed distance time =
     distance / time
 
+computeTime : Float -> Float -> Float
 computeTime startTime endTime = 
     endTime - startTime
 
+weekday : Int -> String
 weekday dayInNumber = 
     case dayInNumber of
         0 ->
@@ -59,8 +68,9 @@ weekday dayInNumber =
         _ ->
             "Unknown Day"
 
+hashtag : String -> String
 hashtag dayInNumber = 
-    case weekday dayInNumber of 
+    case dayInNumber of 
         "Sunday" ->
             "Church"
         
@@ -86,12 +96,11 @@ hashtag dayInNumber =
             "#Whatever"
 
 
-add a b =
-    a + b
-
+multiply : number -> number -> number
 multiply c d = 
     c * d
 
+divide : Float -> Float -> Float
 divide e f = 
     e / f
 
@@ -106,6 +115,7 @@ revelation =
     something to eat - it's all been wrong.
     """
 
+descending : comparable -> comparable -> Order
 descending a b =
     case compare a b of
         LT -> 
@@ -118,6 +128,7 @@ descending a b =
             EQ
 
 
+evilometer : String -> String -> Order
 evilometer character1 character2 = 
     case ( character1, character2 ) of
         ( "Joffrey", "Ramsay" ) -> 
@@ -141,7 +152,7 @@ evilometer character1 character2 =
         _ ->
             GT
 
-
+validateEmail : String -> ( String, String )
 validateEmail email =
     let
         emailPattern = 
@@ -163,6 +174,7 @@ validateEmail email =
 outerMultiplier = 
     6
 
+multiplyByFive : number -> number
 multiplyByFive number = 
     let 
         multiplier =
@@ -177,16 +189,35 @@ scoreMultiplier =
 highestScores = 
     [ 316, 320, 312, 370, 337, 318, 314 ]
 
-
+doubleScores : List number -> List number
 doubleScores scores = 
     List.map (\x -> x * scoreMultiplier) scores
 
+scoresLessThan320 : List number -> List number
 scoresLessThan320 scores = 
     List.filter isLessThan320 scores
 
+isLessThan320 : number -> Bool
 isLessThan320 score =
     score < 320
 
+addOne: number -> number
+addOne y = 
+    y + 1
+
+guardiansWithShortNames : List String -> Int
+guardiansWithShortNames guardians = 
+    guardians 
+        |> List.map String.length
+        |> List.filter (\x -> x < 6)
+        |> List.length
+
+add: number -> number -> number
+add num1 num2 = 
+    num1 + num2
+
+    
+main : Html.Html msg
 main = 
     multiplyByFive 3
         |> Debug.toString
