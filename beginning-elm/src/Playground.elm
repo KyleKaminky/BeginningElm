@@ -1,32 +1,35 @@
-module Playground exposing 
-    ( add
+module Playground exposing
+    ( Greeting(..)
+    , add
+    , descending
     , doubleScores
+    , escapeEarth
     , guardiansWithShortNames
     , highestScores
     , main
+    , sayHello
     , scoresLessThan320
-    , escapeEarth
-    , descending
     , validateEmail
     )
 
 import Html
 import Regex
 
+
 escapeEarth : Float -> Float -> String -> String
 escapeEarth myVelocity mySpeed fuelStatus =
-    let 
-        escapeVelocityInKmPerSec = 
+    let
+        escapeVelocityInKmPerSec =
             11.186
-        
-        orbitalSpeedInKmPerSec = 
+
+        orbitalSpeedInKmPerSec =
             7.67
 
-        whereToLand = 
+        whereToLand =
             if fuelStatus == "low" then
                 "Land on droneship"
 
-            else 
+            else
                 "Land on launchpad"
     in
     if myVelocity > escapeVelocityInKmPerSec then
@@ -35,58 +38,70 @@ escapeEarth myVelocity mySpeed fuelStatus =
     else if mySpeed == orbitalSpeedInKmPerSec then
         "Stay in orbit"
 
-    else 
+    else
         whereToLand
+
 
 computeSpeed : Float -> Float -> Float
 computeSpeed distance time =
     distance / time
 
+
 computeTime : Float -> Float -> Float
-computeTime startTime endTime = 
+computeTime startTime endTime =
     endTime - startTime
 
+
 weekday : Int -> String
-weekday dayInNumber = 
+weekday dayInNumber =
     case dayInNumber of
         0 ->
             "Sunday"
+
         1 ->
             "Monday"
+
         2 ->
             "Tuesday"
-        3 -> 
+
+        3 ->
             "Wednesday"
-        4 -> 
+
+        4 ->
             "Thursday"
-        5 -> 
+
+        5 ->
             "Friday"
-        6 -> 
+
+        6 ->
             "Saturday"
+
         7 ->
             "Sunday"
+
         _ ->
             "Unknown Day"
 
+
 hashtag : String -> String
-hashtag dayInNumber = 
-    case dayInNumber of 
+hashtag dayInNumber =
+    case dayInNumber of
         "Sunday" ->
             "Church"
-        
+
         "Monday" ->
             "MondayBlues"
 
         "Tuesday" ->
             "TakeMeBackTuesday"
 
-        "Wednesday" -> 
+        "Wednesday" ->
             "#Humpday"
 
         "Thursday" ->
             "ThrowbackThursday"
 
-        "Friday" -> 
+        "Friday" ->
             "#FlashbackFriday"
 
         "Saturday" ->
@@ -97,15 +112,16 @@ hashtag dayInNumber =
 
 
 multiply : number -> number -> number
-multiply c d = 
+multiply c d =
     c * d
 
+
 divide : Float -> Float -> Float
-divide e f = 
+divide e f =
     e / f
 
 
-revelation = 
+revelation =
     """
     It became very clear to me sitting out there today
     that every decision I've made in my entire life has
@@ -115,25 +131,26 @@ revelation =
     something to eat - it's all been wrong.
     """
 
+
 descending : comparable -> comparable -> Order
 descending a b =
     case compare a b of
-        LT -> 
+        LT ->
             GT
-        
+
         GT ->
             LT
 
-        EQ -> 
+        EQ ->
             EQ
 
 
 evilometer : String -> String -> Order
-evilometer character1 character2 = 
+evilometer character1 character2 =
     case ( character1, character2 ) of
-        ( "Joffrey", "Ramsay" ) -> 
+        ( "Joffrey", "Ramsay" ) ->
             LT
-        
+
         ( "Joffrey", "Night King" ) ->
             LT
 
@@ -152,31 +169,34 @@ evilometer character1 character2 =
         _ ->
             GT
 
+
 validateEmail : String -> ( String, String )
 validateEmail email =
     let
-        emailPattern = 
+        emailPattern =
             "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b"
 
-        regex = 
+        regex =
             Maybe.withDefault Regex.never <|
                 Regex.fromString emailPattern
-        
-        isValid = 
+
+        isValid =
             Regex.contains regex email
     in
     if isValid then
         ( "Valid email", "green" )
-    
-    else 
+
+    else
         ( "Invalid email", "red" )
 
-outerMultiplier = 
+
+outerMultiplier =
     6
 
+
 multiplyByFive : number -> number
-multiplyByFive number = 
-    let 
+multiplyByFive number =
+    let
         multiplier =
             5
     in
@@ -186,39 +206,61 @@ multiplyByFive number =
 scoreMultiplier =
     2
 
-highestScores = 
+
+highestScores =
     [ 316, 320, 312, 370, 337, 318, 314 ]
 
+
 doubleScores : List number -> List number
-doubleScores scores = 
+doubleScores scores =
     List.map (\x -> x * scoreMultiplier) scores
 
+
 scoresLessThan320 : List number -> List number
-scoresLessThan320 scores = 
+scoresLessThan320 scores =
     List.filter isLessThan320 scores
+
 
 isLessThan320 : number -> Bool
 isLessThan320 score =
     score < 320
 
-addOne: number -> number
-addOne y = 
+
+addOne : number -> number
+addOne y =
     y + 1
 
+
 guardiansWithShortNames : List String -> Int
-guardiansWithShortNames guardians = 
-    guardians 
+guardiansWithShortNames guardians =
+    guardians
         |> List.map String.length
         |> List.filter (\x -> x < 6)
         |> List.length
 
-add: number -> number -> number
-add num1 num2 = 
+
+add : number -> number -> number
+add num1 num2 =
     num1 + num2
 
-    
+
+type Greeting
+    = Howdy
+    | Hola
+
+
+sayHello : Greeting -> String
+sayHello greeting =
+    case greeting of
+        Howdy ->
+            "How y'all doin'?"
+
+        Hola ->
+            "Hola amigo!"
+
+
 main : Html.Html msg
-main = 
+main =
     multiplyByFive 3
         |> Debug.toString
         |> Html.text
