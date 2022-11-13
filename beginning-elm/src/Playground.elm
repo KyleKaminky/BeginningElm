@@ -1,7 +1,6 @@
 module Playground exposing
     ( Character
     , Greeting(..)
-    , MyList(..)
     , add
     , arya
     , descending
@@ -15,11 +14,11 @@ module Playground exposing
     , sayHello
     , scoresLessThan320
     , signUp
-    , sum
     , validateEmail
     )
 
-import Html
+import Html exposing (Html, a, text)
+import MyList exposing (..)
 import Regex
 
 
@@ -338,23 +337,23 @@ getAdultAge character =
                 Nothing
 
 
-type MyList a
-    = Empty
-    | Node a (MyList a)
+list1 : MyList a
+list1 =
+    Empty
 
 
-sum : MyList Int -> Int
-sum myList =
-    case myList of
-        Empty ->
-            0
-
-        Node intValue remainingNodes ->
-            intValue + sum remainingNodes
+list2 : MyList number
+list2 =
+    Node 9 Empty
 
 
-main : Html.Html msg
+list3 : List a
+list3 =
+    []
+
+
+main : Html msg
 main =
-    multiplyByFive 3
+    isEmpty list2
         |> Debug.toString
-        |> Html.text
+        |> text
