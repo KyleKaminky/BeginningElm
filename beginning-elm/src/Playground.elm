@@ -1,6 +1,7 @@
 module Playground exposing
     ( Character
     , Greeting(..)
+    , User
     , add
     , arya
     , descending
@@ -10,14 +11,17 @@ module Playground exposing
     , guardiansWithShortNames
     , highestScores
     , main
+    , resultMap5Example
     , sansa
     , sayHello
     , scoresLessThan320
     , signUp
     , validateEmail
+    , welcomeMessage
     )
 
 import Html exposing (Html, a, text)
+import Json.Decode exposing (decodeString, int)
 import MyList exposing (..)
 import Regex
 
@@ -350,6 +354,39 @@ list2 =
 list3 : List a
 list3 =
     []
+
+
+resultMap5Example : Result Json.Decode.Error Int
+resultMap5Example =
+    Result.map5 addFiveNumbers
+        (decodeString int "1")
+        (decodeString int "2")
+        (decodeString int "3")
+        (decodeString int "4")
+        (decodeString int "5")
+
+
+addFiveNumbers : Int -> Int -> Int -> Int -> Int -> Int
+addFiveNumbers a b c d e =
+    a + b + c + d + e
+
+
+welcomeMessage : { a | isLoggedIn : Bool, name : String } -> String
+welcomeMessage { isLoggedIn, name } =
+    case isLoggedIn of
+        True ->
+            "Welcome " ++ name ++ "!"
+
+        False ->
+            "Please log in."
+
+
+type alias User =
+    { name : String
+    , email : String
+    , age : Int
+    , isLoggedIn : Bool
+    }
 
 
 main : Html msg
