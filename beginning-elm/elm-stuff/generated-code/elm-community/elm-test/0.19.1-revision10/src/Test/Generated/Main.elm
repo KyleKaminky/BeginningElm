@@ -1,6 +1,6 @@
 module Test.Generated.Main exposing (main)
 
-import RippleCarryAdderTests
+import FuzzTests
 
 import Test.Reporter.Reporter exposing (Report(..))
 import Console.Text exposing (UseColor(..))
@@ -12,22 +12,23 @@ main =
     Test.Runner.Node.run
         { runs = 100
         , report = ConsoleReport UseColor
-        , seed = 4171311437472
+        , seed = 343049195341942
         , processes = 8
         , globs =
-            [ "tests/RippleCarryAdderTests.elm"
+            [ "tests/FuzzTests.elm"
             ]
         , paths =
-            [ "/Users/kkaminky/Tutorials/BeginningElm/beginning-elm/tests/RippleCarryAdderTests.elm"
+            [ "/Users/kkaminky/Tutorials/BeginningElm/beginning-elm/tests/FuzzTests.elm"
             ]
         }
-        [ ( "RippleCarryAdderTests"
-          , [ Test.Runner.Node.check RippleCarryAdderTests.andGateTests
-            , Test.Runner.Node.check RippleCarryAdderTests.inverterTests
-            , Test.Runner.Node.check RippleCarryAdderTests.orGateTests
-            , Test.Runner.Node.check RippleCarryAdderTests.halfAdderTests
-            , Test.Runner.Node.check RippleCarryAdderTests.fullAdderTests
-            , Test.Runner.Node.check RippleCarryAdderTests.rippleCarryAdderTests
+        [ ( "FuzzTests"
+          , [ Test.Runner.Node.check FuzzTests.addOneTests
+            , Test.Runner.Node.check FuzzTests.addTests
+            , Test.Runner.Node.check FuzzTests.flipTests
+            , Test.Runner.Node.check FuzzTests.listLengthTests
+            , Test.Runner.Node.check FuzzTests.multiplyFloatTests
+            , Test.Runner.Node.check FuzzTests.pizzaLeftTests
+            , Test.Runner.Node.check FuzzTests.stringTests
             ]
           )
         ]

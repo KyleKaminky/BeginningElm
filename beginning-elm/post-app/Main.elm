@@ -2,9 +2,7 @@ module Main exposing (main)
 
 import Browser exposing (Document, UrlRequest)
 import Browser.Navigation as Nav
-import Char exposing (isOctDigit)
-import Css exposing (currentColor, url)
-import Css.Media exposing (Paged)
+import Css exposing (url)
 import Html exposing (..)
 import Page.ListPosts as ListPosts exposing (view)
 import Route exposing (Route)
@@ -33,6 +31,7 @@ type alias Model =
 type Page
     = NotFoundPage
     | ListPage ListPosts.Model
+    | EditPage EditPost.Model
 
 
 type Msg
@@ -67,6 +66,13 @@ initCurrentPage ( model, existingCmds ) =
                             ListPosts.init
                     in
                     ( ListPage pageModel, Cmd.map ListPageMsg pageCmds )
+
+                Route.Post postId ->
+                    let
+                        ( pageModel, pageCmd ) =
+                            EditPosts.init postId model.navKey
+                    in
+                    ( EditPage pageModel, Cmd.map EditPageMsg pageCmd )
     in
     ( { model | page = currentPage }
     , Cmd.batch [ existingCmds, mappedPageCmds ]

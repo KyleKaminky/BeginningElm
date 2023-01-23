@@ -1,6 +1,7 @@
 module Route exposing (Route(..), parseUrl)
 
 import Html exposing (a)
+import Post exposing (PostId)
 import Url exposing (Url)
 import Url.Parser exposing (..)
 
@@ -8,6 +9,7 @@ import Url.Parser exposing (..)
 type Route
     = NotFound
     | Posts
+    | Post PostId
 
 
 parseUrl : Url -> Route
@@ -25,4 +27,5 @@ matchRoute =
     oneOf
         [ map Posts top
         , map Posts (s "posts")
+        , map Post (s "posts" </> Post.idParser)
         ]
